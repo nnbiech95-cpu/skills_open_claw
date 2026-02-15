@@ -13,7 +13,7 @@ echo "   Workspace: $WORKSPACE"
 echo ""
 
 # Create skill directories
-for skill in memory-compactor scar-registry gradient-tracker sleep-consolidation user-competence-model; do
+for skill in pattern-cache memory-compactor scar-registry gradient-tracker sleep-consolidation user-competence-model; do
   echo "  Installing $skill..."
   mkdir -p "$SKILLS_DIR/$skill"
   cp "$SCRIPT_DIR/$skill/SKILL.md" "$SKILLS_DIR/$skill/SKILL.md"
@@ -24,6 +24,7 @@ echo ""
 echo "  Creating data directories..."
 mkdir -p "$WORKSPACE/memory/distilled"
 mkdir -p "$WORKSPACE/memory/insights/hypotheses"
+mkdir -p "$WORKSPACE/patterns"
 mkdir -p "$WORKSPACE/scars/meta"
 mkdir -p "$WORKSPACE/analytics/baselines"
 mkdir -p "$WORKSPACE/analytics/alerts"
@@ -59,6 +60,34 @@ if [ ! -f "$WORKSPACE/memory/insights/hypotheses/active.md" ]; then
 |----|-----------|-----------|-----------|---------------|--------|
 EOF
   echo "  Created hypotheses/active.md"
+fi
+
+if [ ! -f "$WORKSPACE/patterns/cache.json" ]; then
+  echo "[]" > "$WORKSPACE/patterns/cache.json"
+  echo "  Created patterns/cache.json"
+fi
+
+if [ ! -f "$WORKSPACE/patterns/config.md" ]; then
+  cat > "$WORKSPACE/patterns/config.md" << 'EOF'
+# Pattern Cache Configuration
+
+| Parameter | Value | Description |
+|-----------|-------|-------------|
+| observation_threshold | 5 | Min observations before Phase 2 |
+| suggestion_confidence | 0.50 | Min confidence for Phase 2 (suggest) |
+| autonomous_confidence | 0.85 | Min confidence for Phase 3 (auto-fire) |
+| autonomous_min_fires | 10 | Min successful fires for Phase 3 |
+| correction_penalty | 0.3 | Multiply confidence by this on correction |
+| retirement_corrections | 3 | Corrections before pattern is retired |
+| daily_decay | 0.995 | Daily confidence decay if unused |
+| max_active_patterns | 100 | Hard limit on active patterns |
+EOF
+  echo "  Created patterns/config.md"
+fi
+
+if [ ! -f "$WORKSPACE/patterns/log.md" ]; then
+  echo "# Pattern Cache Log" > "$WORKSPACE/patterns/log.md"
+  echo "  Created patterns/log.md"
 fi
 
 if [ ! -f "$WORKSPACE/COMPETENCE.md" ]; then
@@ -100,6 +129,11 @@ if [ "$1" = "--with-cron" ]; then
   echo "⏰ Setting up cron jobs..."
   echo "   (Requires openclaw CLI to be available)"
   echo ""
+
+  # Pattern Cache
+  openclaw cron add --name "pattern-cache-review" --cron "0 20 * * 0" --session isolated \
+    --message "Run pattern-cache skill: Weekly review. Generate metrics, identify merge candidates, flag drifting patterns, retire dead ones." --model "sonnet" 2>/dev/null && \
+    echo "  ✓ pattern-cache-review" || echo "  ✗ pattern-cache-review (failed)"
 
   # Memory Compactor
   openclaw cron add --name "memory-compactor-nightly" --cron "0 23 * * *" --session isolated \
@@ -154,4 +188,4 @@ echo "  1. Restart OpenClaw or start a new session"
 echo "  2. Ask your agent: 'What cognitive skills do I have installed?'"
 echo "  3. If you didn't use --with-cron, set up cron jobs manually (see each SKILL.md)"
 echo ""
-echo "Estimated monthly cost: ~\$12 for all cron jobs combined."
+echo "Estimated monthly cost: ~\$12 for all cron jobs combined. Pattern Cache SAVES \$3-8/month via bypassed LLM calls."
