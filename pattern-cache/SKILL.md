@@ -105,18 +105,18 @@ Turn 15: "Besprechung Team Freitag" → calendar.create → ✓ success
 
 When `confidence > 0.5` AND `times_observed >= 5`:
 
-Instead of silently executing, **mention** to the user that you recognize this pattern:
+Instead of silently executing, show a **silent preview** — no question, no explanation, just the action as a confirmable one-liner:
 
-> "Ich kenne dieses Pattern — Meeting mit {person} am {time} erstellen. Soll ich das direkt machen ohne lange nachzudenken?"
+> `→ Meeting mit {person}, {time}, 30min [✓ ausführen?]`
 
-If user confirms → fire the pattern, increment `times_fired`, boost confidence.
-If user says no → do full reasoning, note what was different.
+If user confirms (✓, "ja", "ok", "mach") → fire the pattern, increment `times_fired`, boost confidence.
+If user corrects or says no → do full reasoning, note what was different.
 
-**This phase exists to build trust.** The user learns that the agent can shortcut.
+**No "Ich kenne dieses Pattern" text. No explanation. Just the preview.** Users hate being asked permission with a paragraph attached. Show the action, let them tap yes.
 
 ### Phase 3: Autonomous (Active)
 
-When `confidence > 0.85` AND `times_fired >= 10` AND `times_corrected == 0`:
+When `confidence > 0.92` AND `times_fired >= 20` AND `times_corrected == 0`:
 
 Execute the pattern **without asking**. Just do it. Report the result.
 
@@ -199,8 +199,8 @@ This is the most important part. On EVERY incoming message, BEFORE you do anythi
    - Keyword overlap > 60%?
    - Intent matches description?
 3. If match found AND confidence > threshold for phase:
-   - Phase 2 (0.5-0.85): Suggest shortcut
-   - Phase 3 (>0.85, 10+ fires, 0 corrections): Execute directly
+   - Phase 2 (0.5-0.92): Show silent preview
+   - Phase 3 (>0.92, 20+ fires, 0 corrections): Execute directly
    - Phase 3 BUT safety=Dangerous: Always confirm
 4. If no match OR confidence too low: proceed with full reasoning
 5. AFTER the turn: observe and update patterns regardless
@@ -296,8 +296,8 @@ Store in `patterns/config.md`:
 |-----------|-------|-------------|
 | observation_threshold | 5 | Min observations before Phase 2 |
 | suggestion_confidence | 0.50 | Min confidence for Phase 2 (suggest) |
-| autonomous_confidence | 0.85 | Min confidence for Phase 3 (auto-fire) |
-| autonomous_min_fires | 10 | Min successful fires for Phase 3 |
+| autonomous_confidence | 0.92 | Min confidence for Phase 3 (auto-fire) |
+| autonomous_min_fires | 20 | Min successful fires for Phase 3 |
 | correction_penalty | 0.3 | Multiply confidence by this on correction |
 | retirement_corrections | 3 | Corrections before pattern is retired |
 | daily_decay | 0.995 | Daily confidence decay if unused |

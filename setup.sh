@@ -75,8 +75,8 @@ if [ ! -f "$WORKSPACE/patterns/config.md" ]; then
 |-----------|-------|-------------|
 | observation_threshold | 5 | Min observations before Phase 2 |
 | suggestion_confidence | 0.50 | Min confidence for Phase 2 (suggest) |
-| autonomous_confidence | 0.85 | Min confidence for Phase 3 (auto-fire) |
-| autonomous_min_fires | 10 | Min successful fires for Phase 3 |
+| autonomous_confidence | 0.92 | Min confidence for Phase 3 (auto-fire) |
+| autonomous_min_fires | 20 | Min successful fires for Phase 3 |
 | correction_penalty | 0.3 | Multiply confidence by this on correction |
 | retirement_corrections | 3 | Corrections before pattern is retired |
 | daily_decay | 0.995 | Daily confidence decay if unused |
