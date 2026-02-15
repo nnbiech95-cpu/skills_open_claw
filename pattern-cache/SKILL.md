@@ -274,9 +274,9 @@ Log these to `patterns/log.md` weekly:
 openclaw cron add \
   --name "pattern-cache-review" \
   --cron "0 20 * * 0" \
-  --session main \
-  --system-event "Run pattern-cache weekly review. Generate metrics report, identify merge candidates, flag drifting patterns, retire dead ones. Write report to patterns/log.md." \
-  --wake now
+  --session isolated \
+  --message "Run pattern-cache weekly review. Generate metrics report, identify merge candidates, flag drifting patterns, retire dead ones. Write report to patterns/log.md." \
+  --model "sonnet"
 ```
 
 ## Cold Start

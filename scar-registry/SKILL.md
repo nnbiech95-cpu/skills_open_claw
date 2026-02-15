@@ -219,6 +219,10 @@ Maintain `scars/index.md` as a quick-lookup table:
 | strategic-framing | 0.75 | strategy, planning |
 ```
 
+## Integration with Pattern Cache
+
+When the Pattern Cache skill corrects a fired pattern, check if a scar should be created. Pattern corrections often reveal systematic assumptions (e.g. "always assumed 30min meetings"). Treat pattern corrections like any other user correction — if the root cause is a behavioral tendency, create a scar.
+
 ## Anti-Patterns
 
 - **Don't create scars for everything.** A scar for every minor issue creates noise. Only scar on things that should change behavior.

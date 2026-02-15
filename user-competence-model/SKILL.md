@@ -272,6 +272,10 @@ openclaw cron add \
 
 No dedicated cron for signal collection — that happens continuously during normal interactions.
 
+## Integration with Pattern Cache
+
+Pattern Cache fire-rate per domain reveals where the user operates on autopilot (high fire-rate = routine) vs. where they give complex, varying instructions (low fire-rate = creative/expert work). Feed this signal into the competence model as an additional data source for routing decisions.
+
 ## Anti-Patterns
 
 - **Don't tell the user "I'm tracking your competence."** Frame it as "I'm learning how we work best together."

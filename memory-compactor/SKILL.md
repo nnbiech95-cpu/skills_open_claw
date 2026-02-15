@@ -205,6 +205,10 @@ openclaw cron add \
   --thinking high
 ```
 
+## Integration with Pattern Cache
+
+Retired patterns from the Pattern Cache skill (confidence < 0.1, moved to `patterns/retired/`) are deletion candidates. During weekly compression, check `patterns/retired/` and delete entries older than 30 days.
+
 ## Anti-Patterns (Don't Do This)
 
 - **Don't summarize** — Summaries are shorter versions of the same thing. Distillation extracts DIFFERENT things (patterns, not content).

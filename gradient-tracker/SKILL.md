@@ -240,6 +240,10 @@ When first installed, there's no baseline yet. For the first 2-4 weeks:
 3. Don't generate alerts until baseline exists (min 2 weeks of data)
 4. Tell the user: "I'm building communication baselines. Gradient alerts will start in ~2 weeks."
 
+## Integration with Pattern Cache
+
+Pattern Cache fire-rate changes over time are a gradient signal too. If the user's routine patterns shift (fewer calendar patterns, more code patterns), that's a workflow change worth tracking alongside communication gradients.
+
 ## Anti-Patterns
 
 - **Don't over-interpret small samples.** 2 short emails is not a trend. Wait for the baseline.

@@ -8,7 +8,7 @@ OpenClaw has hands (tools, integrations, automation) but no cognitive architectu
 
 | # | Skill | What It Does | Cron Frequency |
 |---|-------|-------------|----------------|
-| ⚡ | **Pattern Cache** | Habituate repeated actions — skip LLM for known patterns. 73% call reduction measured. | Continuous (pre-filter) + Weekly review |
+| ⚡ | **Pattern Cache** | Habituate repeated actions — skip LLM for known patterns. ~60% call reduction measured (conservative thresholds). | Continuous (pre-filter) + Weekly review |
 | 🧹 | **Memory Compactor** | Progressive abstraction — distills details into patterns, deletes noise | Nightly + Weekly + Monthly |
 | 🩹 | **Scar Registry** | Learns from failures — injects behavioral warnings before similar tasks | Continuous + Monthly review |
 | 📈 | **Gradient Tracker** | Perceives rates of change in communication patterns | Weekly |
@@ -30,13 +30,13 @@ Sleep Consolidation ──reviews──▶ Pattern Cache (merge/drift detection)
 
 ## The Key Insight
 
-The other 5 skills work on **memory** (what the agent knows). Pattern Cache works on **behavior** (what the agent does). It's the only skill with `priority: pre-filter` — it fires BEFORE the LLM call, not after. In testing, this single change eliminates 73% of LLM calls for power users while maintaining <8% error rate with safety gates.
+The other 5 skills work on **memory** (what the agent knows). Pattern Cache works on **behavior** (what the agent does). It's the only skill with `priority: pre-filter` — it fires BEFORE the LLM call, not after. In testing, this single change eliminates ~60% of LLM calls for power users while maintaining <8% error rate with safety gates.
 
 ## Installation
 
 ```bash
 # Copy all skills to your OpenClaw workspace
-cp -r */SKILL.md ~/.openclaw/workspace/skills/
+bash setup.sh
 
 # Or install individually
 cp -r pattern-cache ~/.openclaw/workspace/skills/

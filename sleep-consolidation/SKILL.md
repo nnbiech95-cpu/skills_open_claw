@@ -250,6 +250,10 @@ openclaw cron add \
   --wake now
 ```
 
+## Integration with Pattern Cache
+
+During nightly sleep, review today's Pattern Cache activity: Are new patterns emerging? Should similar patterns merge? Are any patterns drifting (user behavior changed, pattern becoming less accurate)? Include pattern drift findings in the morning briefing.
+
 ## Anti-Patterns
 
 - **Don't just summarize the day.** Summaries are Phase 1. The value is in Phase 2 and 3 — connections and hypotheses.
