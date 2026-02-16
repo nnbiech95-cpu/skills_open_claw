@@ -101,3 +101,14 @@ All skills use isolated cron sessions with specified models:
 ## License
 
 MIT. Use it, fork it, improve it, publish it.
+
+---
+
+## 🔬 Multicomputation Plugin (Advanced)
+
+The `multicomputation-plugin/` directory contains a TypeScript OpenClaw plugin that replaces the real-time observation part of all 6 skills with a single mechanism: extract multiple cognitive observables from every LLM call that's already happening.
+
+**Instead of:** 6 skills each making their own analysis → O(S × N) calls
+**Now:** 1 LLM call emits all observations → O(N + C) calls
+
+See [`multicomputation-plugin/README.md`](multicomputation-plugin/README.md) for architecture, installation, and the physics analogy behind it.
